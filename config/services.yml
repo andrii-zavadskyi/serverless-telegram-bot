@@ -1,0 +1,35 @@
+parameters:
+  api_key: bot_api_key
+  bot_name: bot_name
+  hook_url: https://yourapiid.execute-api.eu-central-1.amazonaws.com/dev/bot/hook
+  logging_level: !php/const:Monolog\Logger::INFO
+
+services:
+  logger:
+    class: Monolog\Logger
+    arguments:
+      - 'handler'
+    calls:
+      - [pushHandler, ['@logging.handler']]
+
+  logging.formatter:
+    class: Monolog\Formatter\LineFormatter
+    public: false
+    arguments:
+      - '%%message%% %%context%% %%extra%%'
+
+  logging.handler:
+    class: Monolog\Handler\StreamHandler
+    public: false
+    arguments:
+      - 'php://stderr'
+      - '%logging_level%'
+    calls:
+      - [setFormatter, ['@logging.formatter']]
+
+# Define your own handlers and other services here
+  handler.bot.hook:
+    class: Bot\HookHandler
+
+  handler.bot.set:
+    class: Bot\SetHandler

@@ -1,0 +1,21 @@
+{
+  "name": "araines/serverless-php",
+  "description": "Boilerplate project for Serverless Framework and PHP",
+  "type": "project",
+  "autoload": {
+    "psr-4": {
+      "": "src/"
+    }
+  },
+  "require": {
+    "monolog/monolog": "^1.22",
+    "php": "^7.0",
+    "psr/log": "^1.0",
+    "symfony/config": "^3.2",
+    "symfony/dependency-injection": "^3.2",
+    "symfony/yaml": "^3.2",
+    "longman/telegram-bot": "^0.44.1"
+  },
+  "require-dev": {
+  }
+}

@@ -1,0 +1,26 @@
+FROM amazonlinux
+
+RUN curl --silent --location https://rpm.nodesource.com/setup_6.x | bash -
+RUN yum -y install nodejs
+
+# Create app directory
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+
+# Install app dependencies
+COPY config/ /usr/src/app/config/
+COPY src/ /usr/src/app/src/
+COPY vendor/ /usr/src/app/vendor/
+COPY handler.js /usr/src/app/
+COPY handler.php /usr/src/app/
+COPY php /usr/src/app/
+COPY serverless.yml /usr/src/app/
+
+RUN chmod 777 ./php
+
+RUN npm install serverless -g
+
+COPY . /usr/src/app
+
+RUN serverless config credentials --provider aws --key <AWS_KEY> --secret <AWS_SECRET>
+RUN serverless deploy

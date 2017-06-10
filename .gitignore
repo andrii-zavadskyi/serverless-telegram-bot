@@ -1,0 +1,11 @@
+.idea
+
+# PHP
+/vendor/
+.php_cs.cache
+
+# Serverless directories
+.serverless
+
+# NPM
+node_modules/
